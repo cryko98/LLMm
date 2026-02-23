@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Send, Terminal, Zap, MessageSquare, Code, Play, RefreshCw, Copy, Check, ExternalLink, ChevronRight, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import Markdown from 'react-markdown';
-import { getAI, LOBSTER_SYSTEM_INSTRUCTION, VIBE_CODER_SYSTEM_INSTRUCTION } from './services/ai';
+import { getAI, LOBSTER_SYSTEM_INSTRUCTION, VIBE_CODER_SYSTEM_INSTRUCTION, CRYPTO_PRICE_TOOL } from './services/ai';
 import { cn } from './lib/utils';
 
 // --- Components ---
@@ -127,7 +127,7 @@ const LobsterOracle = () => {
 
     try {
       const ai = getAI();
-      const response = await ai.models.generateContent({
+      let response = await ai.models.generateContent({
         model: "gemini-3-flash-preview",
         contents: [
           { role: 'user', parts: [{ text: userMessage }] }
@@ -135,9 +135,57 @@ const LobsterOracle = () => {
         config: {
           systemInstruction: LOBSTER_SYSTEM_INSTRUCTION,
           temperature: 0.7,
-          tools: [{ googleSearch: {} }],
+          tools: [CRYPTO_PRICE_TOOL],
         }
       });
+
+      // Handle function calls
+      const functionCalls = response.functionCalls;
+      if (functionCalls) {
+        const functionResponses = [];
+        for (const call of functionCalls) {
+          if (call.name === "get_crypto_price") {
+            const symbol = (call.args as any).symbol.toLowerCase();
+            try {
+              // Using CoinGecko simple price API (free, no key required for basic usage)
+              const priceRes = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${symbol}&vs_currencies=usd`);
+              const data = await priceRes.json();
+              const price = data[symbol]?.usd;
+              functionResponses.push({
+                name: call.name,
+                response: { price: price || "Price not found", symbol },
+                id: call.id
+              });
+            } catch (err) {
+              functionResponses.push({
+                name: call.name,
+                response: { error: "Failed to fetch price" },
+                id: call.id
+              });
+            }
+          }
+        }
+
+        // Send function responses back to model
+        response = await ai.models.generateContent({
+          model: "gemini-3-flash-preview",
+          contents: [
+            { role: 'user', parts: [{ text: userMessage }] },
+            { role: 'model', parts: response.candidates[0].content.parts },
+            { role: 'user', parts: functionResponses.map(res => ({
+              functionResponse: {
+                name: res.name,
+                response: res.response,
+                id: res.id
+              }
+            }))}
+          ],
+          config: {
+            systemInstruction: LOBSTER_SYSTEM_INSTRUCTION,
+            temperature: 0.7,
+          }
+        });
+      }
 
       const aiText = response.text || "I seem to have dropped my shell. Try again, human.";
       setMessages(prev => [...prev, { role: 'assistant', content: aiText }]);

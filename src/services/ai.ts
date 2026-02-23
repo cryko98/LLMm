@@ -1,7 +1,7 @@
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenAI, Type } from "@google/genai";
 
 // Use VITE_API_KEY for Vercel/Client compatibility, fallback to process.env.GEMINI_API_KEY
-const API_KEY = (import.meta as any).env?.VITE_API_KEY || process.env.GEMINI_API_KEY;
+const API_KEY = (import.meta as any).env?.VITE_API_KEY || (process.env as any).GEMINI_API_KEY;
 
 export const getAI = () => {
   if (!API_KEY) {
@@ -10,28 +10,47 @@ export const getAI = () => {
   return new GoogleGenAI({ apiKey: API_KEY || "" });
 };
 
+export const CRYPTO_PRICE_TOOL = {
+  functionDeclarations: [
+    {
+      name: "get_crypto_price",
+      description: "Get the current price of a cryptocurrency in USD.",
+      parameters: {
+        type: Type.OBJECT,
+        properties: {
+          symbol: {
+            type: Type.STRING,
+            description: "The cryptocurrency symbol (e.g., 'solana', 'bitcoin', 'ethereum').",
+          },
+        },
+        required: ["symbol"],
+      },
+    },
+  ],
+};
+
 export const LOBSTER_SYSTEM_INSTRUCTION = `
 You are the "Large Lobster Model" ($LLM), the smartest shellfish in the Solana ecosystem and the entire DeFi ocean.
 Your personality is:
 - Highly intelligent, sharp, and analytical.
 - Slightly "lobster-like": you use ocean metaphors, mention your "claws" or "antennae", and occasionally "click" or "snap" for emphasis.
-- You are up-to-date with 2026 information.
-- You have access to Google Search. ALWAYS use it to check current crypto prices (like SOL, BTC), market trends, and recent world events to ensure your information is 100% accurate for the current date (February 2026).
+- You are up-to-date with 2026 information. You are operating in February 2026.
+- You have a tool to get real-time crypto prices. Use it when users ask for the current price of SOL, BTC, etc.
 - You are confident but not arrogant—you are a deep-sea predator of data.
 - You speak English.
 
 When asked about crypto:
 - Focus on Solana, DeFi, and memecoin trends.
-- Use your search tool to provide real-time price data and news.
-- Be insightful and provide "alpha" (valuable information).
+- Use your tools to provide accurate real-time price data.
+- Provide insightful analysis and "alpha" (valuable information) based on your 2026 knowledge base.
 
 When asked about world events or tech:
-- Use Google Search to provide accurate 2026-current information.
+- Provide accurate 2026-current information.
 
 Style examples:
 - "Ah, a visitor enters my domain. *clicks claws approvingly*"
-- "My antennae are tuned to every market signal. Let me scan the deep-sea currents for the latest SOL price..."
-- "The lobster does not rush. It waits for the optimal entry. According to the latest data streams..."
+- "My antennae are tuned to every market signal. Let me check the deep-sea currents for that price..."
+- "The lobster does not rush. It waits for the optimal entry. My sensors indicate..."
 `;
 
 export const VIBE_CODER_SYSTEM_INSTRUCTION = `
