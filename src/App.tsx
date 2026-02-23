@@ -11,9 +11,12 @@ const Header = () => (
   <header className="fixed top-0 left-0 right-0 z-50 border-b border-lobster-border bg-lobster-dark/80 backdrop-blur-xl">
     <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
       <div className="flex items-center gap-2">
-        <div className="w-8 h-8 bg-lobster-red rounded flex items-center justify-center">
-          <span className="font-display font-bold text-lobster-dark text-xl">L</span>
-        </div>
+        <img 
+          src="https://qqdcuegjodukfawbobro.supabase.co/storage/v1/object/public/Hh/file_00000000980c7246b10a4e26658e15f0%20(1).png" 
+          alt="Large Lobster Model Logo" 
+          className="w-8 h-8 object-contain"
+          referrerPolicy="no-referrer"
+        />
         <span className="font-display font-bold text-xl tracking-tighter">$LLM</span>
       </div>
       <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-white/60">
@@ -343,9 +346,12 @@ const Footer = () => (
   <footer className="py-12 border-t border-lobster-border">
     <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-8">
       <div className="flex items-center gap-2">
-        <div className="w-6 h-6 bg-lobster-red rounded flex items-center justify-center">
-          <span className="font-display font-bold text-lobster-dark text-sm">L</span>
-        </div>
+        <img 
+          src="https://qqdcuegjodukfawbobro.supabase.co/storage/v1/object/public/Hh/file_00000000980c7246b10a4e26658e15f0%20(1).png" 
+          alt="Large Lobster Model Logo" 
+          className="w-6 h-6 object-contain"
+          referrerPolicy="no-referrer"
+        />
         <span className="font-display font-bold text-lg tracking-tighter">$LLM</span>
       </div>
       <div className="flex gap-8 text-xs font-bold text-white/40">
