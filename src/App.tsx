@@ -364,7 +364,7 @@ const Footer = () => (
         <span className="font-display font-bold text-lg tracking-tighter">$LLM</span>
       </div>
       <div className="flex gap-8 text-xs font-bold text-white/40">
-        <a href="#" className="hover:text-lobster-red transition-colors">TWITTER</a>
+        <a href="https://x.com/i/communities/2025893106860920985" target="_blank" rel="noopener noreferrer" className="hover:text-lobster-red transition-colors">TWITTER</a>
         <a href="#" className="hover:text-lobster-red transition-colors">SOLSCAN</a>
       </div>
       <div className="text-[10px] text-white/20 font-mono">
