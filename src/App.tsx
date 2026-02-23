@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Send, Terminal, Zap, MessageSquare, Code, Play, RefreshCw, Copy, Check, ExternalLink, ChevronRight, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import Markdown from 'react-markdown';
-import { getAI, LOBSTER_SYSTEM_INSTRUCTION, VIBE_CODER_SYSTEM_INSTRUCTION, CRYPTO_PRICE_TOOL } from './services/ai';
+import { getAI, LOBSTER_SYSTEM_INSTRUCTION, CRYPTO_PRICE_TOOL } from './services/ai';
 import { cn } from './lib/utils';
 
 // --- Components ---
@@ -18,7 +18,6 @@ const Header = () => (
       </div>
       <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-white/60">
         <a href="#agent" className="hover:text-lobster-red transition-colors">AGENT</a>
-        <a href="#vibe-coder" className="hover:text-lobster-red transition-colors">VIBE CODER</a>
         <a href="#" className="hover:text-lobster-red transition-colors">TOKEN</a>
       </nav>
       <div className="flex items-center gap-4">
@@ -340,202 +339,6 @@ const LobsterOracle = () => {
   );
 };
 
-const VibeCoder = () => {
-  const [prompt, setPrompt] = useState('');
-  const [generatedCode, setGeneratedCode] = useState<string | null>(null);
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [view, setView] = useState<'preview' | 'code'>('preview');
-  const [copied, setCopied] = useState(false);
-
-  const handleGenerate = async () => {
-    if (!prompt.trim() || isGenerating) return;
-
-    setIsGenerating(true);
-    setGeneratedCode(null);
-
-    try {
-      const ai = getAI();
-      const response = await ai.models.generateContent({
-        model: "gemini-3-flash-preview",
-        contents: [
-          { role: 'user', parts: [{ text: prompt }] }
-        ],
-        config: {
-          systemInstruction: VIBE_CODER_SYSTEM_INSTRUCTION,
-          temperature: 0.2, // Lower temperature for more consistent code output
-        }
-      });
-
-      let code = response.text || "";
-      // Clean up markdown if the model included it despite instructions
-      code = code.replace(/^```html\n/, '').replace(/\n```$/, '');
-      setGeneratedCode(code);
-      setView('preview');
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsGenerating(false);
-    }
-  };
-
-  const copyToClipboard = () => {
-    if (!generatedCode) return;
-    navigator.clipboard.writeText(generatedCode);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
-  const examples = [
-    "Snake game", "Portfolio tracker", "Lobster Todo App", "NFT landing page", "CSS 3D cube", "Pomodoro timer"
-  ];
-
-  return (
-    <section id="vibe-coder" className="py-20 bg-lobster-dark/50 lobster-grid relative">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="mb-12">
-          <div className="text-lobster-red text-sm font-bold tracking-widest mb-2 flex items-center gap-2">
-            <div className="w-4 h-1 bg-lobster-red" /> VIBE CODER
-          </div>
-          <h2 className="text-5xl font-display font-black mb-6">Build anything. <span className="text-lobster-red">Just describe it.</span></h2>
-          <p className="text-white/60 text-lg max-w-3xl">
-            Type a description of any app, website, minigame, or tool. The lobster generates complete, runnable HTML – instantly rendered in the preview pane. No coding skills required. Just vibes.
-          </p>
-        </div>
-
-        <div className="flex flex-wrap gap-2 mb-8">
-          <span className="text-xs font-bold text-white/40 uppercase self-center mr-2">Try:</span>
-          {examples.map((ex) => (
-            <button
-              key={ex}
-              onClick={() => setPrompt(ex)}
-              className="px-3 py-1.5 rounded-lg border border-lobster-border bg-white/5 text-xs font-medium hover:border-lobster-red/50 hover:bg-lobster-red/5 transition-all"
-            >
-              {ex}
-            </button>
-          ))}
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div className="space-y-4">
-            <div className="glass-card p-6 h-[500px] flex flex-col">
-              <div className="flex items-center gap-2 mb-4 text-lobster-red">
-                <Sparkles size={18} />
-                <span className="font-display font-bold">Vibe Prompt</span>
-              </div>
-              <textarea
-                value={prompt}
-                onChange={(e) => setPrompt(e.target.value)}
-                placeholder="Describe your app, website, game, or tool in plain English...
-
-Examples:
-• A dark-themed crypto price ticker with animated numbers
-• A browser-based Pong game with a lobster skin
-• A minimal personal homepage with animated gradient
-• A countdown timer to the next Bitcoin halving
-
-The lobster will build it for you. 🦞"
-                className="flex-1 bg-lobster-dark/50 border border-lobster-border rounded-lg p-4 text-sm focus:outline-none focus:border-lobster-red transition-colors resize-none font-mono"
-              />
-              <button
-                onClick={handleGenerate}
-                disabled={isGenerating || !prompt.trim()}
-                className="mt-4 w-full bg-lobster-red text-lobster-dark py-4 rounded-lg font-black flex items-center justify-center gap-2 hover:bg-lobster-red/90 transition-all disabled:opacity-50"
-              >
-                {isGenerating ? (
-                  <>
-                    <RefreshCw size={18} className="animate-spin" />
-                    CLAWING CODE...
-                  </>
-                ) : (
-                  <>
-                    <Zap size={18} />
-                    GENERATE VIBE
-                  </>
-                )}
-              </button>
-            </div>
-          </div>
-
-          <div className="space-y-4">
-            <div className="glass-card h-[500px] flex flex-col overflow-hidden">
-              <div className="p-3 border-b border-lobster-border bg-white/5 flex items-center justify-between">
-                <div className="flex items-center gap-1.5">
-                  <div className="w-2.5 h-2.5 rounded-full bg-lobster-red/50" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-amber-500/50" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/50" />
-                  <div className="ml-4 px-3 py-1 bg-lobster-dark rounded border border-lobster-border text-[10px] text-white/40 font-mono">
-                    about:blank
-                  </div>
-                </div>
-                <div className="flex bg-lobster-dark rounded border border-lobster-border p-0.5">
-                  <button
-                    onClick={() => setView('preview')}
-                    className={cn(
-                      "px-3 py-1 rounded text-[10px] font-bold transition-all",
-                      view === 'preview' ? "bg-lobster-red text-lobster-dark" : "text-white/40 hover:text-white"
-                    )}
-                  >
-                    Preview
-                  </button>
-                  <button
-                    onClick={() => setView('code')}
-                    className={cn(
-                      "px-3 py-1 rounded text-[10px] font-bold transition-all",
-                      view === 'code' ? "bg-lobster-red text-lobster-dark" : "text-white/40 hover:text-white"
-                    )}
-                  >
-                    Code
-                  </button>
-                </div>
-              </div>
-
-              <div className="flex-1 bg-white relative">
-                {generatedCode ? (
-                  view === 'preview' ? (
-                    <iframe
-                      srcDoc={generatedCode}
-                      title="Vibe Preview"
-                      className="w-full h-full border-none"
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-lobster-dark p-4 overflow-auto font-mono text-xs text-white/80">
-                      <div className="flex justify-end mb-2">
-                        <button
-                          onClick={copyToClipboard}
-                          className="p-2 hover:bg-white/10 rounded transition-colors text-white/60"
-                        >
-                          {copied ? <Check size={14} className="text-emerald-500" /> : <Copy size={14} />}
-                        </button>
-                      </div>
-                      <pre>{generatedCode}</pre>
-                    </div>
-                  )
-                ) : (
-                  <div className="w-full h-full bg-lobster-dark flex flex-col items-center justify-center p-8 text-center">
-                    <div className="w-16 h-16 rounded-full bg-lobster-red/10 flex items-center justify-center text-lobster-red mb-4">
-                      <Code size={32} />
-                    </div>
-                    <h4 className="text-xl font-display font-bold mb-2">Awaiting your vision</h4>
-                    <p className="text-white/40 text-sm max-w-xs">
-                      Describe something above and the lobster will build it. Rendered live right here.
-                    </p>
-                  </div>
-                )}
-                {isGenerating && (
-                  <div className="absolute inset-0 bg-lobster-dark/80 backdrop-blur-sm flex flex-col items-center justify-center">
-                    <div className="w-12 h-12 border-4 border-lobster-red border-t-transparent rounded-full animate-spin mb-4" />
-                    <div className="text-lobster-red font-display font-bold animate-pulse">CLAWING...</div>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
-
 const Footer = () => (
   <footer className="py-12 border-t border-lobster-border">
     <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-8">
@@ -547,8 +350,6 @@ const Footer = () => (
       </div>
       <div className="flex gap-8 text-xs font-bold text-white/40">
         <a href="#" className="hover:text-lobster-red transition-colors">TWITTER</a>
-        <a href="#" className="hover:text-lobster-red transition-colors">TELEGRAM</a>
-        <a href="#" className="hover:text-lobster-red transition-colors">DEXTOOLS</a>
         <a href="#" className="hover:text-lobster-red transition-colors">SOLSCAN</a>
       </div>
       <div className="text-[10px] text-white/20 font-mono">
@@ -567,7 +368,6 @@ export default function App() {
       <main>
         <Hero />
         <LobsterOracle />
-        <VibeCoder />
       </main>
       <Footer />
     </div>
