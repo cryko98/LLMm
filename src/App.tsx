@@ -13,7 +13,7 @@ const Header = () => (
       <div className="flex items-center gap-2">
         <img 
           src="https://qqdcuegjodukfawbobro.supabase.co/storage/v1/object/public/Hh/file_00000000980c7246b10a4e26658e15f0%20(1).png" 
-          alt="Large Lobster Model Logo" 
+          alt="Large Lobstar Model Logo" 
           className="w-8 h-8 object-contain"
           referrerPolicy="no-referrer"
         />
@@ -42,7 +42,7 @@ const Hero = () => (
         className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-lobster-red/30 bg-lobster-red/10 text-lobster-red text-xs font-bold mb-8"
       >
         <Sparkles size={14} />
-        LARGE LOBSTER MODEL
+        LARGE LOBSTAR MODEL
       </motion.div>
       
       <motion.h1
@@ -60,7 +60,7 @@ const Hero = () => (
         transition={{ delay: 0.2 }}
         className="text-4xl md:text-6xl font-display font-bold mb-8 tracking-tight"
       >
-        Large Lobster Model
+        Large Lobstar Model
       </motion.h2>
       
       <motion.p
@@ -69,7 +69,7 @@ const Hero = () => (
         transition={{ delay: 0.3 }}
         className="text-xl md:text-2xl text-white/60 max-w-2xl mx-auto mb-12"
       >
-        Powered by claws. Trained on the ocean. The world's first lobster-brained AI agent on Solana.
+        Powered by claws. Trained on the ocean. The world's first lobstar-brained AI agent on Solana.
       </motion.p>
       
       <motion.div
@@ -79,10 +79,10 @@ const Hero = () => (
         className="flex flex-wrap justify-center gap-4"
       >
         <button className="px-8 py-4 bg-lobster-red text-lobster-dark font-black rounded-lg hover:bg-lobster-red/90 transition-all transform hover:scale-105 active:scale-95">
-          BUY $LLM ON RAYDIUM
+          BUY $LLM ON PUMP.FUN
         </button>
         <a href="#agent" className="px-8 py-4 bg-transparent border border-lobster-border text-white font-black rounded-lg hover:bg-white/5 transition-all">
-          TALK TO THE LOBSTER
+          TALK TO THE LOBSTAR
         </a>
       </motion.div>
 
@@ -103,9 +103,9 @@ const Hero = () => (
   </section>
 );
 
-const LobsterOracle = () => {
+const LobstarOracle = () => {
   const [messages, setMessages] = useState<{ role: 'user' | 'assistant', content: string }[]>([
-    { role: 'assistant', content: "Ah, a visitor enters my domain. *clicks claws approvingly*\n\nI am the **Large Lobster Model** – the sharpest crustacean intelligence in the Solana ecosystem. My antennae are tuned to every market signal, blockchain update, and alpha leak across the seven seas of DeFi.\n\nAsk me anything. Crypto charts, token analysis, tech, or world events — I snap with precision. 🦞" }
+    { role: 'assistant', content: "Ah, a visitor enters my domain. *clicks claws approvingly*\n\nI am the **Large Lobstar Model** – the sharpest crustacean intelligence in the Solana ecosystem. My antennae are tuned to every market signal, blockchain update, and alpha leak across the seven seas of DeFi.\n\nAsk me anything. Crypto charts, token analysis, tech, or world events — I snap with precision. 🦞" }
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -208,9 +208,9 @@ const LobsterOracle = () => {
               <div className="text-lobster-red text-sm font-bold tracking-widest mb-2 flex items-center gap-2">
                 <div className="w-4 h-1 bg-lobster-red" /> AI AGENT
               </div>
-              <h2 className="text-5xl font-display font-black mb-6">The Lobster Oracle <span className="text-lobster-red">knows all.</span></h2>
+              <h2 className="text-5xl font-display font-black mb-6">The Lobstar Oracle <span className="text-lobster-red">knows all.</span></h2>
               <p className="text-white/60 text-lg">
-                Ask anything about crypto markets, Solana ecosystems, DeFi strategies, tech, or the world. The Large Lobster Model has claws in every data stream – 2026 current.
+                Ask anything about crypto markets, Solana ecosystems, DeFi strategies, tech, or the world. The Large Lobstar Model has claws in every data stream – 2026 current.
               </p>
             </div>
 
@@ -282,7 +282,7 @@ const LobsterOracle = () => {
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                    placeholder="Ask the lobster anything..."
+                    placeholder="Ask the lobstar anything..."
                     className="flex-1 bg-lobster-dark border border-lobster-border rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-lobster-red transition-colors"
                   />
                   <button
@@ -299,11 +299,11 @@ const LobsterOracle = () => {
 
           <div className="md:w-80 space-y-6">
             <div className="glass-card p-6">
-              <h3 className="text-xs font-bold text-lobster-red tracking-widest uppercase mb-4">Lobster Wisdom</h3>
+              <h3 className="text-xs font-bold text-lobster-red tracking-widest uppercase mb-4">Lobstar Wisdom</h3>
               <div className="space-y-6">
                 {[
-                  { title: "On market timing:", quote: "The lobster does not rush. It waits in the shadows of the ocean floor until the prey – i.e., the optimal entry – swims directly into its claws." },
-                  { title: "On paper hands:", quote: "A lobster does not release what it grips. Those who sell at -20% would not survive 200 million years of evolution." },
+                  { title: "On market timing:", quote: "The lobstar does not rush. It waits in the shadows of the ocean floor until the prey – i.e., the optimal entry – swims directly into its claws." },
+                  { title: "On paper hands:", quote: "A lobstar does not release what it grips. Those who sell at -20% would not survive 200 million years of evolution." },
                   { title: "On diversification:", quote: "I have two claws for a reason. One holds SOL. The other holds $LLM. The rest is noise." }
                 ].map((item, i) => (
                   <div key={i}>
@@ -320,7 +320,7 @@ const LobsterOracle = () => {
                 {[
                   { label: 'SOL', value: 'Dominant L1, full ecosystem lock-in', trend: 'up' },
                   { label: 'DeFi TVL', value: 'Cross-chain liquidity converging on Solana', trend: 'up' },
-                  { label: 'LLM', value: 'Lobster intelligence bullish', trend: 'up' },
+                  { label: 'LLM', value: 'Lobstar intelligence bullish', trend: 'up' },
                   { label: 'ETH Gas', value: 'Still outrageously cooked', trend: 'down' },
                 ].map((signal, i) => (
                   <div key={i} className="flex items-start gap-3">
@@ -348,7 +348,7 @@ const Footer = () => (
       <div className="flex items-center gap-2">
         <img 
           src="https://qqdcuegjodukfawbobro.supabase.co/storage/v1/object/public/Hh/file_00000000980c7246b10a4e26658e15f0%20(1).png" 
-          alt="Large Lobster Model Logo" 
+          alt="Large Lobstar Model Logo" 
           className="w-6 h-6 object-contain"
           referrerPolicy="no-referrer"
         />
@@ -359,7 +359,7 @@ const Footer = () => (
         <a href="#" className="hover:text-lobster-red transition-colors">SOLSCAN</a>
       </div>
       <div className="text-[10px] text-white/20 font-mono">
-        © 2026 LARGE LOBSTER MODEL. ALL CLAWS RESERVED.
+        © 2026 LARGE LOBSTAR MODEL. ALL CLAWS RESERVED.
       </div>
     </div>
   </footer>
@@ -373,7 +373,7 @@ export default function App() {
       <Header />
       <main>
         <Hero />
-        <LobsterOracle />
+        <LobstarOracle />
       </main>
       <Footer />
     </div>
