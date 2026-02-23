@@ -5,6 +5,8 @@ import Markdown from 'react-markdown';
 import { getAI, LOBSTER_SYSTEM_INSTRUCTION, CRYPTO_PRICE_TOOL } from './services/ai';
 import { cn } from './lib/utils';
 
+const CA = "R5NtVf4vCkjRiHv9LyU4dWtiZmeY395pVnattupNLLM";
+
 // --- Components ---
 
 const Header = () => (
@@ -32,76 +34,109 @@ const Header = () => (
   </header>
 );
 
-const Hero = () => (
-  <section className="relative pt-32 pb-20 overflow-hidden lobster-grid">
-    <div className="scanline" />
-    <div className="max-w-7xl mx-auto px-4 relative z-10 text-center">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-lobster-red/30 bg-lobster-red/10 text-lobster-red text-xs font-bold mb-8"
-      >
-        <Sparkles size={14} />
-        LARGE LOBSTAR MODEL
-      </motion.div>
-      
-      <motion.h1
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.1 }}
-        className="text-5xl sm:text-6xl md:text-8xl font-display font-black text-lobster-red mb-4 tracking-tighter"
-      >
-        $LLM
-      </motion.h1>
-      
-      <motion.h2
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-        className="text-3xl sm:text-4xl md:text-6xl font-display font-bold mb-8 tracking-tight"
-      >
-        Large Lobstar Model
-      </motion.h2>
-      
-      <motion.p
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3 }}
-        className="text-xl md:text-2xl text-white/60 max-w-2xl mx-auto mb-12"
-      >
-        Powered by claws. Trained on the ocean. The world's first lobstar-brained AI agent on Solana.
-      </motion.p>
-      
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4 }}
-        className="flex flex-wrap justify-center gap-4"
-      >
-        <button className="px-8 py-4 bg-lobster-red text-lobster-dark font-black rounded-lg hover:bg-lobster-red/90 transition-all transform hover:scale-105 active:scale-95">
-          BUY $LLM ON PUMP.FUN
-        </button>
-        <a href="#agent" className="px-8 py-4 bg-transparent border border-lobster-border text-white font-black rounded-lg hover:bg-white/5 transition-all">
-          TALK TO THE LOBSTAR
-        </a>
-      </motion.div>
+const Hero = () => {
+  const [copied, setCopied] = useState(false);
 
-      <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
-        {[
-          { label: 'TOTAL SUPPLY', value: '1B' },
-          { label: 'TAX', value: '0%' },
-          { label: 'LP BURNED', value: '100%' },
-          { label: 'VIBES', value: '🦞' },
-        ].map((stat, i) => (
-          <div key={i} className="text-center">
-            <div className="text-lobster-red font-display font-black text-3xl mb-1">{stat.value}</div>
-            <div className="text-white/40 text-xs font-bold tracking-widest">{stat.label}</div>
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(CA);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <section className="relative pt-32 pb-20 overflow-hidden lobster-grid">
+      <div className="scanline" />
+      <div className="max-w-7xl mx-auto px-4 relative z-10 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-lobster-red/30 bg-lobster-red/10 text-lobster-red text-xs font-bold mb-8"
+        >
+          <Sparkles size={14} />
+          LARGE LOBSTAR MODEL
+        </motion.div>
+        
+        <motion.h1
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.1 }}
+          className="text-5xl sm:text-6xl md:text-8xl font-display font-black text-lobster-red mb-4 tracking-tighter"
+        >
+          $LLM
+        </motion.h1>
+        
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="text-3xl sm:text-4xl md:text-6xl font-display font-bold mb-8 tracking-tight"
+        >
+          Large Lobstar Model
+        </motion.h2>
+        
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="text-xl md:text-2xl text-white/60 max-w-2xl mx-auto mb-12"
+        >
+          Powered by claws. Trained on the ocean. The world's first lobstar-brained AI agent on Solana.
+        </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.35 }}
+          className="max-w-xl mx-auto mb-12 p-3 rounded-lg border border-lobster-border bg-lobster-dark/50 backdrop-blur-sm flex items-center justify-between gap-4"
+        >
+          <div className="flex items-center gap-3 overflow-hidden">
+            <div className="text-xs font-bold text-white/40 uppercase tracking-widest shrink-0">CA:</div>
+            <div className="text-xs font-mono text-white/80 truncate">{CA}</div>
           </div>
-        ))}
+          <button 
+            onClick={copyToClipboard}
+            className="shrink-0 p-2 rounded-md hover:bg-white/5 transition-colors text-lobster-red"
+          >
+            {copied ? <Check size={16} /> : <Copy size={16} />}
+          </button>
+        </motion.div>
+        
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="flex flex-wrap justify-center gap-4"
+        >
+          <a 
+            href={`https://pump.fun/coin/${CA}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-8 py-4 bg-lobster-red text-lobster-dark font-black rounded-lg hover:bg-lobster-red/90 transition-all transform hover:scale-105 active:scale-95 flex items-center gap-2"
+          >
+            BUY $LLM ON PUMP.FUN
+          </a>
+          <a href="#agent" className="px-8 py-4 bg-transparent border border-lobster-border text-white font-black rounded-lg hover:bg-white/5 transition-all">
+            TALK TO THE LOBSTAR
+          </a>
+        </motion.div>
+
+        <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+          {[
+            { label: 'TOTAL SUPPLY', value: '1B' },
+            { label: 'TAX', value: '0%' },
+            { label: 'LP BURNED', value: '100%' },
+            { label: 'VIBES', value: '🦞' },
+          ].map((stat, i) => (
+            <div key={i} className="text-center">
+              <div className="text-lobster-red font-display font-black text-3xl mb-1">{stat.value}</div>
+              <div className="text-white/40 text-xs font-bold tracking-widest">{stat.label}</div>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 const LobstarOracle = () => {
   const [messages, setMessages] = useState<{ role: 'user' | 'assistant', content: string }[]>([
@@ -365,7 +400,7 @@ const Footer = () => (
       </div>
       <div className="flex gap-8 text-xs font-bold text-white/40">
         <a href="https://x.com/i/communities/2025893106860920985" target="_blank" rel="noopener noreferrer" className="hover:text-lobster-red transition-colors">TWITTER</a>
-        <a href="#" className="hover:text-lobster-red transition-colors">SOLSCAN</a>
+        <a href={`https://solscan.io/token/${CA}`} target="_blank" rel="noopener noreferrer" className="hover:text-lobster-red transition-colors">SOLSCAN</a>
       </div>
       <div className="text-[10px] text-white/20 font-mono">
         © 2026 LARGE LOBSTAR MODEL. ALL CLAWS RESERVED.
