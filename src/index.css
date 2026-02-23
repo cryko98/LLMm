@@ -1,0 +1,69 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-display: "Space Grotesk", sans-serif;
+
+  --color-lobster-red: #FF4D2D;
+  --color-lobster-dark: #0A0A0A;
+  --color-lobster-card: #141414;
+  --color-lobster-border: #262626;
+}
+
+@layer base {
+  body {
+    @apply bg-lobster-dark text-white font-sans antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-bold tracking-tight;
+  }
+}
+
+.lobster-grid {
+  background-image: radial-gradient(circle at 1px 1px, #1a1a1a 1px, transparent 0);
+  background-size: 40px 40px;
+}
+
+.glass-card {
+  @apply bg-lobster-card/80 backdrop-blur-md border border-lobster-border rounded-xl;
+}
+
+.lobster-glow {
+  box-shadow: 0 0 20px rgba(255, 77, 45, 0.15);
+}
+
+.lobster-glow-strong {
+  box-shadow: 0 0 40px rgba(255, 77, 45, 0.3);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-lobster-dark;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-lobster-border rounded-full hover:bg-lobster-red/50 transition-colors;
+}
+
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+.scanline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to bottom, transparent, rgba(255, 77, 45, 0.1), transparent);
+  animation: scanline 8s linear infinite;
+  pointer-events: none;
+}
