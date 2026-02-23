@@ -12,7 +12,7 @@ const Header = () => (
     <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
       <div className="flex items-center gap-2">
         <img 
-          src="https://qqdcuegjodukfawbobro.supabase.co/storage/v1/object/public/Hh/file_00000000980c7246b10a4e26658e15f0%20(1).png" 
+          src="https://qqdcuegjodukfawbobro.supabase.co/storage/v1/object/public/Hh/IMG_20260223_120222_727.jpg" 
           alt="Large Lobstar Model Logo" 
           className="w-8 h-8 object-contain"
           referrerPolicy="no-referrer"
@@ -347,7 +347,7 @@ const Footer = () => (
     <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-8">
       <div className="flex items-center gap-2">
         <img 
-          src="https://qqdcuegjodukfawbobro.supabase.co/storage/v1/object/public/Hh/file_00000000980c7246b10a4e26658e15f0%20(1).png" 
+          src="https://qqdcuegjodukfawbobro.supabase.co/storage/v1/object/public/Hh/IMG_20260223_120222_727.jpg" 
           alt="Large Lobstar Model Logo" 
           className="w-6 h-6 object-contain"
           referrerPolicy="no-referrer"
