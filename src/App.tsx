@@ -49,7 +49,7 @@ const Hero = () => (
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.1 }}
-        className="text-6xl md:text-8xl font-display font-black text-lobster-red mb-4 tracking-tighter"
+        className="text-5xl sm:text-6xl md:text-8xl font-display font-black text-lobster-red mb-4 tracking-tighter"
       >
         $LLM
       </motion.h1>
@@ -58,7 +58,7 @@ const Hero = () => (
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
-        className="text-4xl md:text-6xl font-display font-bold mb-8 tracking-tight"
+        className="text-3xl sm:text-4xl md:text-6xl font-display font-bold mb-8 tracking-tight"
       >
         Large Lobstar Model
       </motion.h2>
@@ -109,15 +109,17 @@ const LobstarOracle = () => {
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const chatEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+    }
   };
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  }, [messages, isLoading]);
 
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
@@ -214,7 +216,7 @@ const LobstarOracle = () => {
               </p>
             </div>
 
-            <div className="glass-card h-[600px] flex flex-col overflow-hidden lobster-glow">
+            <div className="glass-card h-[500px] md:h-[600px] flex flex-col overflow-hidden lobster-glow">
               <div className="p-4 border-b border-lobster-border bg-white/5 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded-full bg-lobster-red/20 flex items-center justify-center text-lobster-red">
@@ -231,7 +233,10 @@ const LobstarOracle = () => {
                 </div>
               </div>
 
-              <div className="flex-1 overflow-y-auto p-6 space-y-6">
+              <div 
+                ref={messagesContainerRef}
+                className="flex-1 overflow-y-auto p-4 md:p-6 space-y-6 scroll-smooth"
+              >
                 {messages.map((msg, i) => (
                   <motion.div
                     key={i}
@@ -254,7 +259,7 @@ const LobstarOracle = () => {
                         ? "bg-white/5 border border-white/10" 
                         : "bg-lobster-red/5 border border-lobster-red/20"
                     )}>
-                      <div className="markdown-body prose prose-invert prose-sm max-w-none">
+                      <div className="markdown-body prose prose-invert prose-sm max-w-none break-words">
                         <Markdown>{msg.content}</Markdown>
                       </div>
                     </div>
@@ -272,7 +277,6 @@ const LobstarOracle = () => {
                     </div>
                   </div>
                 )}
-                <div ref={chatEndRef} />
               </div>
 
               <div className="p-4 border-t border-lobster-border bg-white/5">
@@ -281,7 +285,12 @@ const LobstarOracle = () => {
                     type="text"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault();
+                        handleSend();
+                      }
+                    }}
                     placeholder="Ask the lobstar anything..."
                     className="flex-1 bg-lobster-dark border border-lobster-border rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-lobster-red transition-colors"
                   />
